@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, DisplayWeather.class);
         intent.putExtra("CITY_NAME", cityNameText);
 
-        System.out.println(cityName);
-
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.openweathermap.org/").
                 addConverterFactory(GsonConverterFactory.create()).build();
         JsonPlaceHolderAPI jsonPlaceHolderAPI = retrofit.create(JsonPlaceHolderAPI.class);
