@@ -42,7 +42,6 @@ public class DisplayWeather extends AppCompatActivity {
 
 
         Picasso.with(this).load(iconUrl).error(R.drawable.error).into(image);
-
         TimeZone tz = TimeZone.getDefault();
         Calendar c = Calendar.getInstance(tz);
         @SuppressLint("DefaultLocale") String time3 = String.format("%02d", c.get(Calendar.HOUR_OF_DAY)) + ":" +
