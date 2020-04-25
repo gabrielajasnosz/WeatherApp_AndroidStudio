@@ -38,10 +38,9 @@ public class DisplayWeather extends AppCompatActivity {
         tempMin=findViewById(R.id.cityTempMin);
         humidity=findViewById(R.id.cityHumidity);
         feels_like=findViewById(R.id.cityFeelsLike);
-
-
-
         iconUrl = iconUrl + weather.getWeather()[0].getIcon() + "@2x.png";
+
+
         Picasso.with(this).load(iconUrl).error(R.drawable.error).into(image);
 
         TimeZone tz = TimeZone.getDefault();

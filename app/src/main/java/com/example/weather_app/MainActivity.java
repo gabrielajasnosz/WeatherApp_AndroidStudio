@@ -35,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
         errorMsg = findViewById(R.id.errorMessage);
         cityName = findViewById(R.id.enterCity);
         loadData();
+    }
 
-
-}
-    public void sendText(View view) throws UnsupportedEncodingException {
+    public void sendText(View view) {
         final String cityNameText = cityName.getText().toString();
         intent = new Intent(this, DisplayWeather.class);
         intent.putExtra("CITY_NAME", cityNameText);
@@ -54,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MainWeather> call, Response<MainWeather> response) {
                 if (!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
-                    errorMsg.setText("Brak danych dla podanego miasta.");
+                    errorMsg.setText("No information.");
                     return;
                 }
                 weather = response.body();

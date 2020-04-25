@@ -25,7 +25,7 @@
         android:id="@+id/checkButton"
         android:layout_width="247dp"
         android:layout_height="46dp"
-        android:background="#8FE9F4"
+        android:background="#528FD5"
         android:text="Check the weather"
         android:onClick="sendText"
         app:layout_constraintBottom_toBottomOf="parent"
