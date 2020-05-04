@@ -2,15 +2,12 @@ package com.example.weather_app;
 
 import android.annotation.SuppressLint;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,12 +24,13 @@ import retrofit2.Response;
 public class DisplayWeather extends AppCompatActivity {
     private MainWeather weather;
 
-   TextView time,tempMax,tempMin,humidity,cityTemp,cityPressure,cityName,feels_like,info;
-   SwipeRefreshLayout swipe;
-    private String iconUrl = "https://openweathermap.org/img/wn/";
+
+    TextView time,tempMax,tempMin,humidity,cityTemp,cityPressure,cityName,feels_like,info;
+    SwipeRefreshLayout swipe;
     ImageView image;
     String city;
     Toast error;
+    String iconUrl;
 
 
     @SuppressLint("SetTextI18n")
@@ -55,7 +53,10 @@ public class DisplayWeather extends AppCompatActivity {
         swipe = findViewById(R.id.swipeRefresh);
         info=findViewById(R.id.dataInfo);
         cityName.setText(city.toUpperCase());
-        update(weather);
+        iconUrl= "https://openweathermap.org/img/wn/";
+
+        setInformation(weather);
+
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -75,6 +76,7 @@ public class DisplayWeather extends AppCompatActivity {
                 }
             }
         });
+
         Thread t=new Thread(){
             public void run(){
                 try{
@@ -104,15 +106,13 @@ public class DisplayWeather extends AppCompatActivity {
         };
         t.start();
     }
-
-
     private void refreshData() {
-        Call<MainWeather> call = MainActivity.findData(city);
+        Call<MainWeather> call = MainActivity.sendRequest(city);
         call.enqueue(new Callback<MainWeather>() {
             @Override
             public void onResponse(Call<MainWeather> call, Response<MainWeather> response) {
                 weather=response.body();
-                update(weather);
+                setInformation(weather);
             }
             @Override
             public void onFailure(Call<MainWeather> call, Throwable t) {
@@ -120,10 +120,8 @@ public class DisplayWeather extends AppCompatActivity {
             }
         });
     }
-
-
-    public void update(MainWeather weather){
-        iconUrl = iconUrl + weather.getWeather()[0].getIcon() + "@2x.png";
+    public void setInformation(MainWeather weather){
+        iconUrl = "https://openweathermap.org/img/wn/" + weather.getWeather()[0].getIcon() + "@2x.png";
         Picasso.with(this).load(iconUrl).error(R.drawable.error).into(image);
         TimeZone tz = TimeZone.getDefault();
         Calendar c = Calendar.getInstance(tz);

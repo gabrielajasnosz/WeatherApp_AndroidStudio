@@ -24,8 +24,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private String apiid = "749561a315b14523a8f5f1ef95e45864";
-    private String units = "metric";
     Button b1;
     TextView errorMsg;
     EditText cityName;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, DisplayWeather.class);
             intent.putExtra("CITY_NAME", cityNameText);
 
-            Call<MainWeather> call = findData(cityNameText);
+            Call<MainWeather> call = sendRequest(cityNameText);
             call.enqueue(new Callback<MainWeather>() {
                 @Override
                 public void onResponse(Call<MainWeather> call, Response<MainWeather> response) {
@@ -89,16 +87,13 @@ public class MainActivity extends AppCompatActivity {
         cityName.setText(name);
     }
 
-    public static Call<MainWeather> findData(String city){
+    public static Call<MainWeather> sendRequest(String city){
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.openweathermap.org/").
                 addConverterFactory(GsonConverterFactory.create()).build();
 
         JsonPlaceHolderAPI jsonPlaceholderAPI = retrofit.create(JsonPlaceHolderAPI.class);
-
         Call<MainWeather> call = jsonPlaceholderAPI.getMainWeatherClassCall(city+",pl", "749561a315b14523a8f5f1ef95e45864","metric" );
-
         return call;
-
     }
 
     public boolean network(){
