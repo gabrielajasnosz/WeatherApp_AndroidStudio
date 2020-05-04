@@ -141,12 +141,12 @@ public class DisplayWeather extends AppCompatActivity {
         boolean wifi = false;
         boolean mobile = false;
         ConnectivityManager connManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (mWifi.isConnected()) {
+        NetworkInfo Wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo Mobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (Wifi.isConnected()) {
             wifi = true;
         }
-        if(mMobile.isConnected()){
+        if(Mobile.isConnected()){
             mobile = true;
         }
         return wifi||mobile;
