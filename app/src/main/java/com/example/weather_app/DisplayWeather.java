@@ -63,11 +63,15 @@ public class DisplayWeather extends AppCompatActivity {
                 if(network()) {
                     refreshData();
                     swipe.setRefreshing(false);
+                    error = Toast.makeText(getApplicationContext(), "Data refreshed.", Toast.LENGTH_SHORT);
+                    error.setGravity(Gravity.TOP, 0, 200);
+                    error.show();
                 }
                 else{
                     error = Toast.makeText(getApplicationContext(), "No internet connection!", Toast.LENGTH_SHORT);
                     error.setGravity(Gravity.TOP, 0, 200);
                     error.show();
+                    swipe.setRefreshing(false);
                 }
             }
         });
@@ -80,6 +84,9 @@ public class DisplayWeather extends AppCompatActivity {
                             public void run(){
                                 if(network()) {
                                     refreshData();
+                                    error = Toast.makeText(getApplicationContext(), "Data refreshed.", Toast.LENGTH_SHORT);
+                                    error.setGravity(Gravity.TOP, 0, 200);
+                                    error.show();
                                 }
                                 else{
                                     error = Toast.makeText(getApplicationContext(), "No internet connection!", Toast.LENGTH_SHORT);
@@ -106,9 +113,6 @@ public class DisplayWeather extends AppCompatActivity {
             public void onResponse(Call<MainWeather> call, Response<MainWeather> response) {
                 weather=response.body();
                 update(weather);
-                error = Toast.makeText(getApplicationContext(), "Data refreshed.", Toast.LENGTH_SHORT);
-                error.setGravity(Gravity.TOP, 0, 200);
-                error.show();
             }
             @Override
             public void onFailure(Call<MainWeather> call, Throwable t) {
